@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Te amo mi princesa hermosa</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: black;
+    height: 100%;
+  }
+
+  canvas {
+    display: block;
+    background: black;
+  }
+</style>
+</head>
+<body>
+<canvas id="teAmoCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById('teAmoCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letras = "TE AMO".split("");
+const tamaño = 20;
+const columnas = Math.floor(canvas.width / tamaño);
+const gotas = Array(columnas).fill(1);
+
+function dibujar() {
+  // Fondo negro con transparencia para efecto de caída
+  ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#ff00aa"; // Rosa neón 💖
+  ctx.font = tamaño + "px monospace";
+
+  for (let i = 0; i < gotas.length; i++) {
+    const texto = letras[Math.floor(Math.random() * letras.length)];
+    ctx.fillText(texto, i * tamaño, gotas[i] * tamaño);
+
+    if (gotas[i] * tamaño > canvas.height && Math.random() > 0.975) {
+      gotas[i] = 0;
+    }
+    gotas[i]++;
+  }
+}
+
+setInterval(dibujar, 50);
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>
